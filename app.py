@@ -5,8 +5,8 @@ import pytube as pt
 from transformers import pipeline
 from huggingface_hub import model_info
 
-MODEL_NAME = "openai/whisper-small" #this always needs to stay in line 8 :D sorry for the hackiness
-lang = "en"
+MODEL_NAME = "vumichien/whisper-medium-jp" #this always needs to stay in line 8 :D sorry for the hackiness
+lang = "ja"
 
 device = 0 if torch.cuda.is_available() else "cpu"
 pipe = pipeline(
