@@ -1,6 +1,6 @@
 ---
 title: Whisper Speaker Diarization
-emoji: 🎌
+emoji: 🎎
 colorFrom: blue
 colorTo: red
 sdk: gradio
