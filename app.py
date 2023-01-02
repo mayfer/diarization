@@ -265,24 +265,24 @@ with demo:
     transcription_var = gr.Variable()
     
     with gr.Row():
-            gr.Markdown('''
-            ### This space allows you to: 
-            ##### 1. Download youtube video with a given URL
-            ##### 2. Watch it in the first video component
-            ##### 3. Run automatic speech recognition and diarization (speaker identification)
-            ''')
-            memory = psutil.virtual_memory()
-            system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
+        gr.Markdown('''
+        ### This space allows you to: 
+        ##### 1. Download youtube video with a given URL
+        ##### 2. Watch it in the first video component
+        ##### 3. Run automatic speech recognition and diarization (speaker identification)
+        ''')
+        memory = psutil.virtual_memory()
+        system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
    
     with gr.Row():         
         gr.Markdown('''
             ### You can test with some youtube links as below:
             ''')
-            examples = gr.Examples(examples=
-                    [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
-                      "https://www.youtube.com/watch?v=-UX0X45sYe4", 
-                      "https://www.youtube.com/watch?v=7minSgqi-Gw"],
-                   label="Examples", inputs=[youtube_url_in])
+        examples = gr.Examples(examples=
+                [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
+                  "https://www.youtube.com/watch?v=-UX0X45sYe4", 
+                  "https://www.youtube.com/watch?v=7minSgqi-Gw"],
+               label="Examples", inputs=[youtube_url_in])
            
 
     with gr.Row():
