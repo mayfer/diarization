@@ -172,11 +172,11 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
         # Read and convert youtube video
         _,file_ending = os.path.splitext(f'{video_file_path}')
         print(f'file enging is {file_ending}')
+        audio_file = video_file_path.replace(file_ending, ".wav")
         print("starting conversion to wav")
-        os.system(f'ffmpeg -i "{video_file_path}" -ar 16000 -ac 1 -c:a pcm_s16le "{video_file_path.replace(file_ending, ".wav")}"')
+        os.system(f'ffmpeg -i "{video_file_path}" -ar 16000 -ac 1 -c:a pcm_s16le "{audio_file}"')
         
         # Get duration
-        audio_file = video_file_path.replace(file_ending, ".wav")
         with contextlib.closing(wave.open(audio_file,'r')) as f:
             frames = f.getnframes()
             rate = f.getframerate()
@@ -184,10 +184,9 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
         print(f"conversion to wav ready, duration of audio file: {duration}")
 
         # Transcribe audio
-        # options = dict(language=selected_source_lang, beam_size=5, best_of=5)
-        # transcribe_options = dict(task="transcribe", **options)
-        # result = model.transcribe(audio_file, **transcribe_options)
-        result = model.transcribe(audio_file, task="transcribe", language=selected_source_lang)
+        options = dict(language=selected_source_lang, beam_size=5, best_of=5)
+        transcribe_options = dict(task="transcribe", **options)
+        result = model.transcribe(audio_file, **transcribe_options)
         segments = result["segments"]
         print("starting whisper done with whisper")
     except Exception as e:
@@ -243,6 +242,7 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
 
 
 # ---- Gradio Layout -----
+# Inspiration from https://huggingface.co/spaces/RASMUS/Whisper-youtube-crosslingual-subtitles
 video_in = gr.Video(label="Video file", mirror_webcam=False)
 youtube_url_in = gr.Textbox(label="Youtube url", lines=1, interactive=True)
 video_out = gr.Video(label="Video Out", mirror_webcam=False)
@@ -305,8 +305,8 @@ with demo:
             with gr.Column():
                 gr.Markdown('''
                 ##### Here you can start the transcription process.
-                ##### Please select source language for transcription.
-                ##### Please select number of speakers for getting better results.
+                ##### Please select the source language for transcription.
+                ##### You should select a number of speakers for getting better results.
                 ''')
             selected_source_lang.render()
             selected_whisper_model.render()
