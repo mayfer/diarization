@@ -1,5 +1,5 @@
 ---
-title: Whisper Medium Japanese
+title: Whisper Speaker Diarization
 emoji: 🎌
 colorFrom: blue
 colorTo: red
