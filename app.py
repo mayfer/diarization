@@ -273,7 +273,9 @@ with demo:
             ''')
             memory = psutil.virtual_memory()
             system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
-            gr.Markdown('''
+   
+    with gr.Row():         
+        gr.Markdown('''
             ### You can test with some youtube links as below:
             ''')
             examples = gr.Examples(examples=
