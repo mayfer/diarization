@@ -24,7 +24,7 @@ import psutil
 num_cores = psutil.cpu_count()
 os.environ["OMP_NUM_THREADS"] = f"{num_cores}"
 
-whisper_models = ["base", "small", "medium", "large", "base.en"]
+whisper_models = ["base", "small", "medium", "large"]
 source_languages = {
     "en": "English",
     "zh": "Chinese",
