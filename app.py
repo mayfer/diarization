@@ -223,6 +223,7 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
             'Speaker': [],
             'Text': []
         }
+        text = ''
         for (i, segment) in enumerate(segments):
             if i == 0 or segments[i - 1]["speaker"] != segment["speaker"]:
                 objects['Start'].append(str(time(segment["start"])))
