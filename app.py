@@ -150,7 +150,7 @@ def get_youtube(video_url):
 
 def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_speakers):
     """
-    # Youtube with translated subtitles using OpenAI Whisper
+    # Transcribe youtube link using OpenAI Whisper
     This space allows you to:
     1. Download youtube video with a given url
     2. Watch it in the first video component
@@ -245,7 +245,7 @@ youtube_url_in = gr.Textbox(label="Youtube url", lines=1, interactive=True)
 video_out = gr.Video(label="Video Out", mirror_webcam=False)
 
 
-df_init = pd.DataFrame(columns=['Start','End', 'Speaker', 'Text'])
+df_init = pd.DataFrame(columns=['Start', 'End', 'Speaker', 'Text'])
 
 selected_source_lang = gr.Dropdown(choices=source_language_list, type="value", value="en", label="Spoken language in video", interactive=True)
 selected_whisper_model = gr.Dropdown(choices=whisper_models, type="value", value="base", label="Selected Whisper model", interactive=True)
