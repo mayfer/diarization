@@ -136,9 +136,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("DEVICE IS: ")
 print(device)
 
-videos_out_path = Path("./videos_out")
-videos_out_path.mkdir(parents=True, exist_ok=True)
-
 
 def time(secs):
     return datetime.timedelta(seconds=round(secs))
@@ -289,7 +286,6 @@ with demo:
                label="Examples", inputs=[youtube_url_in])
            
 
-            
     with gr.Row():
         with gr.Column():
             youtube_url_in.render()
