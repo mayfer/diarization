@@ -277,7 +277,7 @@ with demo:
         
         with gr.Column():
             gr.Markdown('''
-            ### Insert Youtube URL below. Some test youtube links below:
+            ### You can test with some youtube links as below:
             ''')
             examples = gr.Examples(examples=
                 [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
