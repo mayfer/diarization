@@ -282,7 +282,7 @@ with demo:
     
     with gr.Row():
         gr.Markdown('''
-        ### This space allows you to: 
+        ### What you can do with this space: 
         ##### 1. Download youtube video with a given URL
         ##### 2. Watch it in the first video component
         ##### 3. Run automatic speech recognition and diarization (speaker identification)
