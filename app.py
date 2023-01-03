@@ -333,5 +333,6 @@ with demo:
     with gr.Row():
         with gr.Column():
             transcription_df.render()
+            system_info.render()
 
 demo.launch(debug=True)
