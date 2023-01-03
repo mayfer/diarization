@@ -266,13 +266,9 @@ number_speakers = gr.Number(precision=0, value=2, label="Selected number of spea
 system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
 transcription_df = gr.DataFrame(value=df_init,label="Transcription dataframe", row_count=(0, "dynamic"), max_rows = 10, wrap=True, overflow_row_behaviour='paginate')
 
-demo = gr.Blocks(css='''
-#cut_btn, #reset_btn { align-self:stretch; }
-#\\31 3 { max-width: 540px; }
-.output-markdown {max-width: 65ch !important;}
-''')
+title = "Whisper speaker diarization"
+demo = gr.Blocks(title=title)
 demo.encrypt = False
-
 
 with demo:
     gr.Markdown('''
