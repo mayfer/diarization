@@ -334,4 +334,4 @@ with demo:
         with gr.Column():
             transcription_df.render()
 
-demo.launch(debug=True, share=True)
+demo.launch(debug=True)
