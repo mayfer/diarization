@@ -17,6 +17,8 @@ from pyannote.audio.pipelines.speaker_verification import PretrainedSpeakerEmbed
 from pyannote.audio import Audio
 from pyannote.core import Segment
 
+from gpuinfo import GPUInfo
+
 import wave
 import contextlib
 
@@ -137,7 +139,7 @@ print("DEVICE IS: ")
 print(device)
 
 
-def time(secs):
+def convert_time(secs):
     return datetime.timedelta(seconds=round(secs))
 
 def get_youtube(video_url):
@@ -161,6 +163,7 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
     """
     
     model = whisper.load_model(whisper_model)
+    time_start = time.time()
     if(video_file_path == None):
         raise ValueError("Error no video input")
     print(video_file_path)
@@ -222,17 +225,29 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
         text = ''
         for (i, segment) in enumerate(segments):
             if i == 0 or segments[i - 1]["speaker"] != segment["speaker"]:
-                objects['Start'].append(str(time(segment["start"])))
+                objects['Start'].append(str(convert_time(segment["start"])))
                 objects['Speaker'].append(segment["speaker"])
                 if i != 0:
-                    objects['End'].append(str(time(segments[i - 1]["end"])))
+                    objects['End'].append(str(convert_time(segments[i - 1]["end"])))
                     objects['Text'].append(text)
                     text = ''
             text += segment["text"] + ' '
-        objects['End'].append(str(time(segments[i - 1]["end"])))
+        objects['End'].append(str(convert_time(segments[i - 1]["end"])))
         objects['Text'].append(text)
         
-        return pd.DataFrame(objects)
+        time_end = time.time()
+        time_diff = time_end - time_start
+        memory = psutil.virtual_memory()
+        gpu_utilization, gpu_memory = GPUInfo.gpu_usage()
+        gpu_utilization = gpu_utilization[0] if len(gpu_utilization) > 0 else 0
+        gpu_memory = gpu_memory[0] if len(gpu_memory) > 0 else 0
+        system_info = f"""
+        *Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB.* 
+        *Processing time: {time_diff:.5} seconds.*
+        *GPU Utilization: {gpu_utilization}%, GPU Memory: {gpu_memory}MiB.*
+        """
+
+        return pd.DataFrame(objects), system_info
     
     except Exception as e:
         raise RuntimeError("Error Running inference with local model", e)
@@ -266,13 +281,13 @@ with demo:
     memory = psutil.virtual_memory()
     
     with gr.Row():
-        gr.Markdown(f'''
+        gr.Markdown('''
         ### This space allows you to: 
         ##### 1. Download youtube video with a given URL
         ##### 2. Watch it in the first video component
         ##### 3. Run automatic speech recognition and diarization (speaker identification)
-        *Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*
         ''')
+        system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
         
     with gr.Row():         
         gr.Markdown('''
@@ -307,7 +322,7 @@ with demo:
             selected_whisper_model.render()
             number_speakers.render()
             transcribe_btn = gr.Button("Transcribe audio and diarization")
-            transcribe_btn.click(speech_to_text, [video_in, selected_source_lang, selected_whisper_model, number_speakers], transcription_df)
+            transcribe_btn.click(speech_to_text, [video_in, selected_source_lang, selected_whisper_model, number_speakers], [transcription_df, system_info])
 
             
     with gr.Row():
@@ -319,4 +334,4 @@ with demo:
         with gr.Column():
             transcription_df.render()
 
-demo.launch(debug=True)
+demo.launch(debug=True, share=True)
