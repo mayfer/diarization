@@ -287,12 +287,12 @@ with demo:
         ##### 2. Watch it in the first video component
         ##### 3. Run automatic speech recognition and diarization (speaker identification)
         ''')
-        system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
         
     with gr.Row():         
         gr.Markdown('''
             ### You can test with some youtube links as below:
             ''')
+        
     examples = gr.Examples(examples=
             [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
               "https://www.youtube.com/watch?v=-UX0X45sYe4", 
