@@ -257,8 +257,6 @@ def speech_to_text(video_file_path, selected_source_lang, whisper_model, num_spe
 # Inspiration from https://huggingface.co/spaces/RASMUS/Whisper-youtube-crosslingual-subtitles
 video_in = gr.Video(label="Video file", mirror_webcam=False)
 youtube_url_in = gr.Textbox(label="Youtube url", lines=1, interactive=True)
-video_out = gr.Video(label="Video Out", mirror_webcam=False)
-
 
 df_init = pd.DataFrame(columns=['Start', 'End', 'Speaker', 'Text'])
 memory = psutil.virtual_memory()
@@ -277,9 +275,12 @@ demo.encrypt = False
 
 
 with demo:
-    transcription_var = gr.Variable()
-    memory = psutil.virtual_memory()
-    
+    gr.Markdown('''
+        <div>
+        <h1 style='text-align: center'>Whisper speaker diarization</h1>
+        This space uses Whisper models from <a href='https://github.com/openai/whisper' target='_blank'><b>OpenAI</b></a> to recoginze the speech and ECAPA-TDNN model from <a href='https://github.com/speechbrain/speechbrain' target='_blank'><b>SpeechBrain</b></a> to encode and clasify speakers</h2>
+        </div>
+    ''')
     with gr.Row():
         gr.Markdown('''
         ### What you can do with this space: 
@@ -334,5 +335,6 @@ with demo:
         with gr.Column():
             transcription_df.render()
             system_info.render()
+            gr.Markdown('''<center><img src='https://visitor-badge.glitch.me/badge?page_id=WhisperDiarizationSpeakers' alt='visitor badge'></center>''')
 
 demo.launch(debug=True)
