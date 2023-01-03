@@ -278,11 +278,11 @@ with demo:
         gr.Markdown('''
             ### You can test with some youtube links as below:
             ''')
-        examples = gr.Examples(examples=
-                [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
-                  "https://www.youtube.com/watch?v=-UX0X45sYe4", 
-                  "https://www.youtube.com/watch?v=7minSgqi-Gw"],
-               label="Examples", inputs=[youtube_url_in])
+    examples = gr.Examples(examples=
+            [ "https://www.youtube.com/watch?v=j7BfEzAFuYc&t=32s", 
+              "https://www.youtube.com/watch?v=-UX0X45sYe4", 
+              "https://www.youtube.com/watch?v=7minSgqi-Gw"],
+           label="Examples", inputs=[youtube_url_in])
            
 
     with gr.Row():
