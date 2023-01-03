@@ -261,11 +261,11 @@ video_out = gr.Video(label="Video Out", mirror_webcam=False)
 
 
 df_init = pd.DataFrame(columns=['Start', 'End', 'Speaker', 'Text'])
-
+memory = psutil.virtual_memory()
 selected_source_lang = gr.Dropdown(choices=source_language_list, type="value", value="en", label="Spoken language in video", interactive=True)
 selected_whisper_model = gr.Dropdown(choices=whisper_models, type="value", value="base", label="Selected Whisper model", interactive=True)
 number_speakers = gr.Number(precision=0, value=2, label="Selected number of speakers", interactive=True)
-
+system_info = gr.Markdown(f"*Memory: {memory.total / (1024 * 1024 * 1024):.2f}GB, used: {memory.percent}%, available: {memory.available / (1024 * 1024 * 1024):.2f}GB*")
 transcription_df = gr.DataFrame(value=df_init,label="Transcription dataframe", row_count=(0, "dynamic"), max_rows = 10, wrap=True, overflow_row_behaviour='paginate')
 
 demo = gr.Blocks(css='''
