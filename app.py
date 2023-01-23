@@ -372,7 +372,9 @@ with demo:
             with gr.Column():
                 transcription_df.render()
                 system_info.render()
-                gr.Markdown('''<center><img src='https://visitor-badge.glitch.me/badge?page_id=WhisperDiarizationSpeakers' alt='visitor badge'></center>''')
+                gr.Markdown('''<center><img src='https://visitor-badge.glitch.me/badge?page_id=WhisperDiarizationSpeakers' alt='visitor badge'></center>
+                [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+                ''')
     
     with gr.Tab("Whisper Transcribe Japanese Audio"):
         gr.Markdown(f'''
