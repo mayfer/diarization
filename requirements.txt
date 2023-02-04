@@ -11,8 +11,7 @@ tokenizers
 torch
 torchaudio
 tqdm==4.64.1
-EasyNMT==2.0.2
-tqdm   
+EasyNMT==2.0.2   
 nltk
 transformers
 pysrt
