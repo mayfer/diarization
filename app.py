@@ -197,7 +197,7 @@ def speech_to_text(audio_file_path, num_speakers, selected_source_lang="en", whi
         result = model.transcribe(audio_file, **transcribe_options)
         segments = result["segments"]
         print(f"Transcription ready, number of segments: {len(segments)}")
-        print(segments)
+        # print(segments)
         print("starting whisper done with whisper")
     except Exception as e:
         raise RuntimeError("Error converting video to audio")
